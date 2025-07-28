@@ -34,7 +34,7 @@ jobs:
           echo "artifact=$FILE" >> $GITHUB_OUTPUT
 
       - name: Upload and scan with Veracode
-        uses: veracode/veracode-upload-and-scan-action@v0.2.6
+        uses: veracode/veracode-upload-and-scan-action@v0.1.7
         with:
           appname: "sample-gradle-app"
           filepath: ${{ steps.find-jar.outputs.artifact }}
