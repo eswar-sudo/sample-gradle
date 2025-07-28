@@ -20,23 +20,20 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Gradle
-        uses: gradle/actions/setup-gradle@v3
-
-      - name: Build project
-        run: gradle clean build
-
+      - name: Grant permission to Gradle wrapper
+        run: chmod +x sample-gradle-app/gradlew
 
       - name: Build project with Gradle
-        run: ./gradlew clean build
+        run: cd sample-gradle-app && ./gradlew clean build
 
       - name: Find built JAR
         id: find-jar
         run: |
-          FILE=$(find build/libs -type f -name "*.jar" | head -n 1)
-          echo "Found artifact: $FILE"
+          FILE=$(find sample-gradle-app/build/libs -type f -name "*.jar" | head -n 1)
+          echo "artifact=$FILE"
           echo "artifact=$FILE" >> $GITHUB_OUTPUT
 
+      
       - name: Upload and scan with Veracode
         uses: veracode/uploadandscan-action@v0.1.7
         with:
